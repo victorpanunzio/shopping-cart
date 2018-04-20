@@ -1,0 +1,26 @@
+<div class="card-header">
+  <h4>PRODUCTS LIST</h4>
+</div>
+
+<br/>
+
+<div class="container">
+  <div class="row text-center">
+    <div *ngFor="let pro of products" class="col-4">
+      <div class="card">
+        <h5 class="card-header">{{pro.pro_name}}</h5>
+        <div class="card-body">
+          <img src="{{pro.pro_img}}" width="200px">
+          <h5 class="card-title">{{pro.pro_name}}</h5>
+          <p class="card-text">
+            {{pro.pro_desc}}
+            <br/>
+            <button (click)="addToCart(pro._id)" class="btn btn-primary add-to-cart-btn">ADD TO CART</button>
+          </p>
+        </div>
+      </div>
+      <br/>
+    </div>
+  </div>
+</div>
+

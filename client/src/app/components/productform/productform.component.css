@@ -1,0 +1,11 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+#upload-pro-div{
+    margin-top: 5%;
+    display: none;
+}
+.crud-btn{
+    margin-top: 50%;
+    color: white;
+    padding: 10px 15px;
+    font-size: 25px;
+}

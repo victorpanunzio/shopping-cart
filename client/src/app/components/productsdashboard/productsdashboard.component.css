@@ -1,0 +1,19 @@
+.add-to-cart-btn{
+	padding: 10px 50px;  
+}
+
+.add-to-cart-btn:before {
+	font-family: FontAwesome;
+    content:"\f07a";
+    font-size: 25px;
+    position: absolute;
+    opacity: 0;
+	top: 84%;
+	left: 80px;
+	transition: all 200ms ease;
+}
+
+.add-to-cart-btn:hover:before {
+    left: 95px;
+    opacity: 1;
+}

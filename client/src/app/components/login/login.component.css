@@ -1,0 +1,17 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+#login-form-div{
+    width: 30%;
+    margin-top: 10%;
+    border: 1px solid black;
+}
+
+#login-form-div-title{
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    padding: 20px 20px;
+    background-color: dodgerblue;
+    color: white;
+}
+#login-form-div-title i{
+    font-size: 40px;
+}

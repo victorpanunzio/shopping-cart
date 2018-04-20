@@ -1,0 +1,11 @@
+body{outline: none;}
+#logout-btn{outline: none;}
+.navbar-icons{
+    font-size: 15px;
+    color: white;
+    margin-top: 12px;
+    margin-right: 20px;
+}
+.navbar-icons i{
+    font-size: 25px;
+}
