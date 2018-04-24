@@ -36,6 +36,22 @@ export class MainService {
       .map((res: any) => res);
   }
 
+  getCartQuantity(req) {
+    return this.http.get(this.host + '/user/getitemsq/' + req)
+      .map((res: any) => res);
+  }
+
+  modifyProducts(req) {
+    console.log(JSON.stringify(req));
+    return this.http.post(this.host + '/user/modifyProduct', req)
+      .map((res: any) => res);
+  }
+
+  deleteProduct(req) {
+    return this.http.post(this.host + '/user/deleteProduct', req)
+      .map((res: any) => res);
+  }
+
   /* CRUD SERVICES (CART) */
   getAllProducts() {
     console.log('okkk');
@@ -62,6 +78,11 @@ export class MainService {
 
   upadteCard(req) {
     return this.http.post(this.host + '/crud/updateitem', req)
+      .map((res: any) => res);
+  }
+
+  searchProduct(req) {
+    return this.http.post(this.host + '/crud/searchitem', req)
       .map((res: any) => res);
   }
 

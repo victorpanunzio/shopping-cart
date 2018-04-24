@@ -20,8 +20,12 @@
             <td><a><button (click)="deleteItem(pro._id)" class="btn btn-danger crud-btn"><i class="fa fa-trash"></i></button></a></td>
             <td><button (click)="updateCart(pro._id)" class="btn btn-warning crud-btn"><i class="fa fa-pencil"></i></button></td>
           </tr>
+          <br/>
         </tbody>
       </table>
+      <div class="text-right">
+          <h3>TOTAL: ${{totalprice}}</h3>
+      </div>
     </div>
 
   <!-- Modal -->

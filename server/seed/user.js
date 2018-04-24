@@ -27,11 +27,12 @@ const userRegister = (req, res) => {
 
 const userLogin = (req, res) => {
     // we need the model
+    console.log(req.password);
     User.findOne({username: req.username}, (err, docs) => {
         if (err) {
             console.log("ERROR TRYING FINDING THE USER... -> " + err);
             return res.send({status: 500, msg: "User not founded"}).json();
-        } else {
+        } else { 
             if(auth.comparePassword(req.password,docs.password)){
                 console.log(docs);
                 return res.send({status: 200, msg: "User is logged", userid: docs._id, username: docs.username, root: "/userhome"}).json();
@@ -63,9 +64,37 @@ const uploadProduct = (req, res) => {
         } else {
             console.log('okkkk saved todo oki');
             return res.status(200).send({msg: "Product registered successfully!"}).json();
-            
         }
     });
+}
+
+const getCartQ = (req, res) => {
+    console.log(req.id);
+    User.findById({_id: req.id}, 'cart', (err, ok) => {
+        if(err) console.log('Error -> ' + err);
+        res.send({q: ok.cart.length, status: 200});
+    })
+}
+
+const updateProduct = (req, res) => {
+    console.log(req.body);
+    Product.findByIdAndUpdate({_id: req.body.proid}, {pro_name: req.body.proname, pro_quantity: req.body.proq, pro_price: req.body.proprice}, (err, ok) => {
+        if (err){
+            console.log('ERROR -> '+err);
+            res.send({msg: 'An error ocurred :(', status: 500});
+        }else {
+            res.send({msg: 'Product modified successfully !!', status: 200});
+        }
+    });
+}
+
+const deleteProduct = (req, res) => {
+    console.log(req.body);
+    Product.remove({_id: req.body.proid}, (err, ok) => {
+        if(err) console.log("error al elminar->"+err);
+        //deleteProCart(req.body.proid);
+        console.log("todo okey");
+    });    
 }
 
 const exit = () => mongoose.disconnect();    
@@ -73,3 +102,6 @@ const exit = () => mongoose.disconnect();
 module.exports.userRegister = (req, res) => userRegister(req, res);
 module.exports.userLogin = (req, res) => userLogin(req, res);
 module.exports.uploadProduct = (req, res) => uploadProduct(req, res); 
+module.exports.getCartQ = (req, res) => getCartQ(req, res);
+module.exports.updateProduct = (req, res) => updateProduct(req, res);
+module.exports.deleteProduct = (req, res) => deleteProduct(req, res);

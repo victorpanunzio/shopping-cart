@@ -11,7 +11,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { CategorycardComponent } from './components/categorycard/categorycard.component';
 import { ProductsdashboardComponent } from './components/productsdashboard/productsdashboard.component';
 import { ProductformComponent } from './components/productform/productform.component';
 import { CartComponent } from './components/cart/cart.component';
@@ -43,7 +42,6 @@ const appRoutes: Routes = [
     LoginComponent,
     HeaderComponent,
     DashboardComponent,
-    CategorycardComponent,
     ProductsdashboardComponent,
     ProductformComponent,
     CartComponent,

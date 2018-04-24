@@ -15,7 +15,7 @@ declare var JQuery;
 export class CartComponent implements OnInit {
   filltable = [];
   userid: String;
-
+  totalprice: Number;
   constructor(private mainservice: MainService, private popup: MatSnackBar) { }
 
   ngOnInit() {
@@ -24,6 +24,7 @@ export class CartComponent implements OnInit {
   }
 
   getMyCart() {
+    const prices = [];
     console.log('este es mi user id: ' + this.userid);
     this.mainservice.getMyCart(this.userid)
       .subscribe(res => {
@@ -31,13 +32,19 @@ export class CartComponent implements OnInit {
           if (res.hasOwnProperty(key)) {
             console.log(res[key]);
             console.log(res[key]._id);
-            const finalprice = res[key]._id.pro_price * res[key]._id.pro_quantity;
+            const finalprice = res[key]._id.pro_price * res[key].q;
+            prices.push(finalprice);
             res[key]._id.pro_quantity = res[key].q;
             res[key]._id.finalprice = finalprice;
             this.filltable.push(res[key]._id);
           }
         }
+        this.totalprice = prices.reduce(this.getSum);
       });
+  }
+
+  getSum(total, num) {
+    return total + num;
   }
 
   /* DELETE MODAL */
@@ -62,7 +69,6 @@ export class CartComponent implements OnInit {
         }
       });
   }
-
 
   updateCart(id) {
     (document.getElementById(id) as HTMLButtonElement).disabled = false;

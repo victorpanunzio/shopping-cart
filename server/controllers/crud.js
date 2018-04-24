@@ -5,39 +5,65 @@ const route = express.Router();
 
 const Product = require("../dbconfig/schemas/product");
 const User = require("../dbconfig/schemas/user");
-const crud = require("../seed/crud");
 
 /* CART CRUD */
 /* ADD TO CART */
 route.post("/addtocart/", (req, res) => {
-    //alreadyBought(req.body);
-    User.findByIdAndUpdate({_id: mongoose.Types.ObjectId(req.body.pro_userid)}, 
-    {$push: {cart: {_id: mongoose.Types.ObjectId(req.body.pro_id), q: req.body.quantity}}},
-    {safe: true, upsert: true},
-    (err, ok) => {
-        if(err) console.log('errorrr-> ' + err);
-        console.log('todo okk -> ' + ok.cart);
+    alreadyBought(req.body, (data) => {
+        console.log(data);
+        if(!data){
+            User.findByIdAndUpdate({_id: mongoose.Types.ObjectId(req.body.pro_userid)}, 
+            {$push: {cart: {_id: mongoose.Types.ObjectId(req.body.pro_id), q: req.body.quantity}}},
+            {safe: true, upsert: true},
+            (err, ok) => {
+                if(err) console.log('errorrr-> ' + err);
+                res.send({msg: "Product added to cart!", status: 200}).json();
+            });
+        } else {
+            console.log(data);
+            res.send({msg: "Product selected is already on the cart !!", status: 500}).json();
+        }
     });
 });
 
-/* exits on cart */
-const alreadyBought = (req) => {
+const alreadyBought = (req, cb) => {
+    let exits = false;
     User.findById({_id: req.pro_userid}, 'cart', (err, ok) => {
-        for(var i=0; i<ok.cart; i++){
-            console.log(ok.cart[i]);
+        if(err){
+            console.log("Error -> "+err);
+        } else {
+            let myarray = [];
+            for(let val of ok.cart){
+                myarray.push(String(val._id));
+            }
+            exits = (myarray.includes(String(req.pro_id)) ? true : false );
+            cb(exits);
         }
-    })
+    });
 }
-/* GET CART BY ID */
 
 route.get("/getMyCart/:userid", (req, res) => {
     //console.log(req.params.userid);
     User.findById({_id: req.params.userid})
     .populate('cart._id')
     .exec( (err, usercart) => {
-        if (err) console.log("errorrr-> "+ err);
-        console.log('here is my cart -> '+usercart.cart);
-        res.status(200).send(usercart.cart);
+        if (err) {
+            console.log("Error -> "+err);
+        } else {
+            if(usercart.cart.length>0){
+                for(const cart of usercart.cart){
+                    console.log("->"+cart._id)
+                    if(cart._id === null){
+                        usercart.cart.splice(cart.index,1);
+                        usercart.save((err) => {if(err) console.log(err)});
+                    }else{
+                        console.log("Everything is ok");
+                    }
+                }
+            }
+            console.log('here is my cart -> '+usercart.cart);
+            res.status(200).send(usercart.cart);
+        }
     });    
 });
 
@@ -50,16 +76,33 @@ route.post("/deleteitem", (req, res) => {
             res.status(200).send({status: 200, msg: 'Action successful!'}).json();
         }
     });
-});
+}); 
 
 route.post("/updateitem", (req, res) => {
     console.log(req.body);
-    User.update({_id: req.body.userid},
-    {$set: {cart: {_id: req.body.proid, q: parseInt(req.body.proquantity)}}}, (err, ok) => {
+    /*The positional $ operator identifies an element in an array to update without explicitly specifying 
+    the position of the element in the array.*/
+    User.update({_id: req.body.userid, "cart._id": req.body.proid},
+    {$set: { "cart.$.q": parseInt(req.body.proquantity)}}, (err, ok) => {
         if (err) console.log('erriorrrr-> '+ err);
-        console.log("todo excelente->"+ok);
+        console.log("todo excelente->"+JSON.stringify(ok));
     })
 });
+
+route.post("/searchitem", (req, res) => {
+    console.log(req.body.key); 
+    Product.find({pro_name: { $regex: '.*' + req.body.key + '.*', $options: 'i'}}, (err, ok) => {
+        if(err) {
+            res.send({msg: '404, ARTICLE NOT FOUND', status: 404});
+        }else{
+            if(ok==0){
+                res.send({msg: '404, ARTICLE NOT FOUND', status: 404});
+            } else {
+                res.send(ok);
+            }
+        }
+    }) 
+})
 
 /*// CRUD */
 

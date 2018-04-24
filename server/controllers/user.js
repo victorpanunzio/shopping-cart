@@ -11,14 +11,24 @@ mongoose.connect("mongodb://localhost/mean-cart-db");
  
 // CREATE A NEW USER
 route.post("/register", (req, res) => {
-    //console.log("request shit"+req.body.name); // todo ok (req.body -> object)
     myuser.userRegister(req.body, res);
-    //res.send("okk");
 }); 
 
 route.post("/login", (req, res) => {
-    //console.log("user->" + req.body.username + "pw->" + req.body.password); // todo ok (req.body -> object)
     myuser.userLogin(req.body, res);
+});
+
+route.post("/modifyProduct", (req, res) => {
+    myuser.updateProduct(req, res);
+});
+
+route.post("/deleteProduct", (req, res) => {
+    myuser.deleteProduct(req, res);
+});
+
+route.get("/getitemsq/:id", (req, res) => {
+    //console.log(req.params.id);
+    myuser.getCartQ(req.params, res);
 });
 
 /* UPLOAD FILE */ 
@@ -29,7 +39,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({storage: storage});;
-
+ 
 route.post("/uploadproduct", upload.single('file'), (req, res, next) => {
     //console.log(req.body);
     myuser.uploadProduct(req.body, res);

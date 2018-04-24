@@ -92,16 +92,41 @@ export class ProductformComponent implements OnInit {
   deleteYes() {
     const proid = $('.yes-btn').attr('id');
     const userid = localStorage.getItem('id');
-    const req = {proid: proid, userid: userid};
-    this.mainservice.deleteItem(req)
+    const req = {proid: proid};
+    this.mainservice.deleteProduct(req)
       .subscribe(res => {
-        if (res.status === 200) {
+        console.log(res);
+        /*if (res.status === 200) {
           window.location.reload();
         } else {
           this.popup.open(`An error ocurred, try again...`, '', {
             duration: 2000,
           });
-        }
+        }*/
+      });
+  }
+
+  /* MODIFY MODAL */
+  modifyItem(id, n, q, p) {
+    $('.modify-btn').attr('id', id);
+    $('.modal-pro-name').val(n);
+    $('.modal-pro-q').val(q);
+    $('.modal-pro-price').val(p);
+    $('#exampleModalCenter2').modal('show');
+  }
+
+  modifyYes() {
+    const myjson = {proid: $('.modify-btn').attr('id'), proname: $('.modal-pro-name').val(),
+                    proq: $('.modal-pro-q').val(), proprice: $('.modal-pro-price').val()};
+    console.log(myjson);
+    this.mainservice.modifyProducts(myjson)
+      .subscribe(res => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 2200);
+        this.popup.open(res.msg, '', {
+          duration: 2000
+        });
       });
   }
 

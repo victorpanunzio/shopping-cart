@@ -20,13 +20,69 @@
       </li>
     </ul>
       
-    <form class="form-inline my-2 my-lg-0" style="margin-right: 50px;">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <div class="form-inline my-2 my-lg-0" style="margin-right: 50px;">
+      <input class="form-control mr-sm-2" placeholder="Search" id="search-input">
+      <button class="btn btn-outline-success my-2 my-sm-0" (click)="searchItem()">Search</button>
+    </div>
+
     <p class="navbar-icons user-item-nav" routerLink="/uploadproduct"><i class="fa fa-user"></i>      {{username}}</p>
     <p class="navbar-icons user-item-nav" routerLink="/mycart"><i class="fa fa-shopping-cart"></i>      {{quantity}}</p>
     <button mat-button color="warn" class="user-item-nav" id="logout-btn" (click)="logout()">LOG OUT <i class="fa fa-times-circle" style="font-size: 20px;"></i></button>
   </div>
 </nav>
 
+<!-- search modal -->
+<div class="modal fade" id="searchmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">SEARCH RESULTS</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">PRODUCT NAME</th>
+                    <th scope="col">QUANTITY</th>
+                    <th scope="col">PRICE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let pro of searcharray">
+                    <td>{{pro.pro_name}}</td>
+                    <td>{{pro.pro_quantity}}</td>
+                    <td>{{pro.pro_price}}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- not found modal -->
+<div class="modal fade" id="modal404" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">SEARCH RESULTS</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5 align="center"> 404 - PRODUCT NOT FOUND</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../../services/main.service';
+import {MatSnackBar} from '@angular/material';
+
 declare var jQuery: any;
 declare var $: any;
 
@@ -13,7 +15,7 @@ export class ProductsdashboardComponent implements OnInit {
 
   products = [];
 
-  constructor(private mainservice: MainService) { }
+  constructor(private mainservice: MainService, private popup: MatSnackBar) { }
 
   ngOnInit() {
     this.getAll();
@@ -39,6 +41,10 @@ export class ProductsdashboardComponent implements OnInit {
     console.log(productid);
     this.mainservice.addToCart(productid)
       .subscribe(res => {
+        this.popup.open(res.msg, '', {
+          duration: 2000
+        });
+        setTimeout(() => window.location.reload(), 2000);
       });
   }
 
