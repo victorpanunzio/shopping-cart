@@ -29,9 +29,12 @@ export class CartComponent implements OnInit {
       .subscribe(res => {
         for (const key in res) {
           if (res.hasOwnProperty(key)) {
-            const finalprice = res[key].pro_price * res[key].pro_quantity;
-            res[key].finalprice = finalprice;
-            this.filltable.push(res[key]);
+            console.log(res[key]);
+            console.log(res[key]._id);
+            const finalprice = res[key]._id.pro_price * res[key]._id.pro_quantity;
+            res[key]._id.pro_quantity = res[key].q;
+            res[key]._id.finalprice = finalprice;
+            this.filltable.push(res[key]._id);
           }
         }
       });
@@ -39,6 +42,7 @@ export class CartComponent implements OnInit {
 
   /* DELETE MODAL */
   deleteItem(id) {
+    console.log(id);
     $('.yes-btn').attr('id', id);
     $('#exampleModalCenter').modal('show');
   }
@@ -67,6 +71,13 @@ export class CartComponent implements OnInit {
   saveUpdate(id) {
     console.log(id);
     (document.getElementById(id) as HTMLButtonElement).disabled = true;
+    const newval = (document.getElementById(id) as HTMLInputElement).value;
+    const updatejson = {userid: this.userid, proid: id, proquantity: newval};
+    console.log(updatejson);
+    this.mainservice.upadteCard(updatejson)
+      .subscribe(res => {
+        console.log('TODO OK ->' + res);
+      });
   }
 
 }

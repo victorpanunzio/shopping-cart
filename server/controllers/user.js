@@ -22,7 +22,7 @@ route.post("/login", (req, res) => {
 });
 
 /* UPLOAD FILE */ 
-const path = "C:\\Users\\lenri\\Desktop\\MEAN\\mean-cart\\server\\uploads";
+const path = ".\\assets\\uploads";
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, path),
     filename: (req, file, cb) => cb(null, file.originalname)

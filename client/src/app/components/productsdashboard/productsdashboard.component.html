@@ -10,17 +10,19 @@
       <div class="card">
         <h5 class="card-header">{{pro.pro_name}}</h5>
         <div class="card-body">
-          <img src="{{pro.pro_img}}" width="200px">
+          <img src="http://localhost:3000/uploads/{{pro.pro_img}}" width="200px">
           <h5 class="card-title">{{pro.pro_name}}</h5>
           <p class="card-text">
             {{pro.pro_desc}}
-            <br/>
-            <button (click)="addToCart(pro._id)" class="btn btn-primary add-to-cart-btn">ADD TO CART</button>
           </p>
+          <div class="align-self-center" align="center">
+            Quantity: <input type="numer" maxlength="2" class="form-control col-md-2" id="{{pro._id}}">
+          </div>
+          <br/>
+          <button (click)="addToCart(pro._id)" class="btn btn-primary add-to-cart-btn">ADD TO CART</button>
         </div>
       </div>
       <br/>
     </div>
   </div>
 </div>
-

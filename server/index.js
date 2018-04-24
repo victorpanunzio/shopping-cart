@@ -14,6 +14,7 @@ mongoose.connect("mongodb://localhost/mean-cart-db")
         console.log("Connection went wrong... -> " +err.message);
     })
 
+app.use(express.static('assets'));
 app.use(cors());
 app.use(express.json()); // to use json
 app.use(express.urlencoded({extended: false})); 

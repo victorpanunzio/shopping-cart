@@ -14,7 +14,7 @@
         <tbody>
           <tr *ngFor="let pro of filltable" class="text-center">
             <td><p style="margin-top: 32%; font-size: 20px;">{{pro.pro_name | uppercase}}</p></td>
-            <td><img src="http://localhost:3000/server/{{pro.pro_img}}" width="20%"></td>
+            <td><img src="http://localhost:3000/uploads/{{pro.pro_img}}" width="20%"></td>
             <td><input type="number" id="{{pro._id}}" (blur)="saveUpdate(pro._id)" placeholder="{{pro.pro_quantity}}" class="form-control" disabled="true" style="margin-top: 20%;"></td>
             <td><p style="margin-top: 100%; font-size: 20px;">{{pro.finalprice}}</p></td>
             <td><a><button (click)="deleteItem(pro._id)" class="btn btn-danger crud-btn"><i class="fa fa-trash"></i></button></a></td>

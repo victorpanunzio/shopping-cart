@@ -61,6 +61,8 @@ export class MainService {
   }
 
   upadteCard(req) {
+    return this.http.post(this.host + '/crud/updateitem', req)
+      .map((res: any) => res);
   }
 
 }

@@ -48,7 +48,7 @@ const uploadProduct = (req, res) => {
     var product = new Product({
         pro_name: req.proname,
         pro_desc: req.prodescription,
-        pro_img: './uploads/' + req.proimage,
+        pro_img: req.proimage,
         pro_quantity: parseInt(req.proquantity),
         pro_price: parseInt(req.proprice),
         pro_userid: req.userid
